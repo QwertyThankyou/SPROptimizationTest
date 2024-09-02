@@ -23,11 +23,8 @@
         <div id="unity-build-title">Samolov SPR</div>
       </div>
     </div>
-
-    <!-- Добавим кнопку для вызова модального окна -->
-    <button onclick="showUnityModal()">Показать модальное окно</button>
-
     <script>
+
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -93,6 +90,7 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
+
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
@@ -107,31 +105,18 @@
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-
-          // Сохраняем unityInstance глобально для использования в других функциях
-          window.unityInstance = unityInstance;
-
-        }).catch((message) => {
-          alert(message);
-        });
-      };
+              }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+              }).catch((message) => {
+                alert(message);
+              });
+            };
 
       document.body.appendChild(script);
 
-      // Функция, которая будет вызываться по нажатию на кнопку
-      function showUnityModal() {
-        if (window.unityInstance) {
-          // Отправляем сообщение в Unity
-          window.unityInstance.SendMessage('GameObjectName', 'ShowModal', '');
-        } else {
-          console.error('Unity instance is not initialized.');
-        }
-      }
     </script>
   </body>
 </html>
